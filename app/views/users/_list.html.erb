@@ -1,0 +1,53 @@
+
+<!-- プロフィールと新規投稿の部分テンプレート -->
+
+<!-- @を外してrenderで呼び出す -->
+
+<div class="profile-container">
+  <h2>User info</h2>
+  <!-- ユーザの名前の下にattachment_image_tagを使用してプロフィ画像を表示する -->
+  <!-- 投稿に表示されるユーザの画像もプロフィール画像に変更する -->
+  <!-- @userは画像を格納しているカラムを持つインスタンス -->
+  <!-- :profile_imageは画像が格納されているカラム -->
+  <!-- refileの使用により_idを外した状態でカラム指定 -->
+  <%= attachment_image_tag user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "pull-left profile-img", fallback: "no_image.jpg", size:'100x100' %>
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <td>name</td>
+        <td><%= user.name %></td>
+      </tr>
+      <tr>
+        <td>introduction</td>
+        <td><%= user.introduction %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <% if user.id == current_user.id %>
+    <%= link_to edit_user_path(user), class: "btn btn-block btn-default" do %>
+      <i class="glyphicon glyphicon-wrench"></i>
+    <% end %>
+  <% end %>
+</div>
+
+<div>
+  <!-- 新規投稿欄 -->
+  <h2>New book</h2>
+  <!-- form_for部分 -->
+  <!-- 入力フォームはここで初期化する -->
+  <%= form_for Book.new do |f| %>
+    <div>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </div>
+    <div>
+      <%= f.label :body, "Opinion" %><br>
+      <%= f.text_area :body,class: "form-control" %>
+    </div>
+    <br>
+    <div>
+      <%= f.submit 'Create Book', class: "btn btn-block btn-primary" %>
+    </div>
+  <% end %>
+</div>

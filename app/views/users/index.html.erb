@@ -1,0 +1,32 @@
+<!-- ユーザー一覧ページ -->
+
+<div class = "container">
+    <div class = "row">
+        <div class= "col-sm-3">
+            <!-- 部分テンプレート呼び出し (引数を与える)-->
+            <%= render 'list', user: current_user, book: @book %>
+        </div>
+        <div class="col-sm-7">
+            <h1>Users</h1>
+            <!-- セルの間隔を2pxずつ空ける -->
+            <table class="table table-striped">
+                <thead>
+                    <tr align=center>
+                    <th>image</th>
+                    <th>name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @users.each do |user| %>
+                        <tr>
+                            <td width="30%"><%= attachment_image_tag user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "profile-img", fallback: "no_image.jpg", size:'40x40' %>
+                            </td>
+                            <td width="62%"><%= user.name %></td>
+                            <td width="8%"><%= link_to "Show", user_path(user) %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

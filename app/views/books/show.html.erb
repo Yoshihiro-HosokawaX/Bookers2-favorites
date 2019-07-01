@@ -1,0 +1,58 @@
+
+<!-- 投稿詳細ページ -->
+
+<div class = "container">
+    <div class = "row">
+        <div class= "col-sm-3">
+            <!-- 部分テンプレート呼び出し (引数を与える)-->
+            <%= render 'users/list', user: @book.user, book: @book %>
+        </div>
+        <div class= "col-sm-7">
+            <h1>Book detail</h1>
+            <div class="flash">
+                <%= flash[:notice] %>
+            </div>
+            <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <!-- 1:Nの関係から book.userのuser_idを引っ張ってくる -->
+                        <td width="10%"><%= attachment_image_tag @book.user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "profile-img", fallback: "no_image.jpg", size:'40x40' %>
+                            <br>
+                            <!-- ログインしてないユーザーも表示できるように -->
+                            <%= link_to @book.user.name, user_path(@book.user) %>
+                        </td>
+                        <td width="20%"><%= @book.title %></td>
+                        <td width="55%"><%= @book.body %></td>
+                        <!-- いいねを表示 -->
+                        <td width="15%">
+                            <% if @book.favorited_by?(current_user) %>
+                                
+                                <%= link_to book_favorites_path(@book), method: :delete do %>
+                                    <i class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></i>
+                                    <%= @book.favorites.count %><br> いいね
+                                <% end %>
+                                
+                            <% else %>
+                                <%= link_to book_favorites_path(@book), method: :post do %>
+                                    <i class="glyphicon glyphicon-heart-o" aria-hidden="true"></i>
+                                <%= @book.favorites.count %><br> いいね
+                                <% end %>
+                            <% end %>
+                        </td>
+
+                        <!-- ログインユーザーのみ編集機能表示をする -->
+                        <% if @book.user_id == current_user.id %>
+                            <td width="6%">
+                                <%= link_to 'Edit', edit_book_path(@book) %>
+                            </td>
+                            <td width="7%">
+                                <%= link_to 'Destroy', @book, method: :delete, data: { confirm: 'Are you sure?'} %>
+                            </td>
+                        <% end %>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

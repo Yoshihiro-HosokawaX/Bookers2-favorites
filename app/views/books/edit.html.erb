@@ -1,0 +1,29 @@
+<!-- 本の編集画面 -->
+
+<header></header>
+
+
+<main>
+    <h1>Editing Book</h1>
+    <!-- form_for部分 -->
+    <%= form_for(@book) do |f| %>
+
+        <div class="field">
+            <%= f.label :title %><br>
+            <%= f.text_field :title, class: "book_title" %>
+        </div>
+        <div class="field">
+            <%= f.label :body %><br>
+            <%= f.text_area :body, class: "book_body" %>
+        </div>
+        <div class="update-book">
+            <%= f.submit 'Update Book' %>
+        </div>
+        <div class="action">
+            <!-- 投稿詳細 -->
+            <%= link_to 'Show', @book, class: "show_#{@book.id}" %> |
+            <!-- 戻るボタン(転移先のURLはルートディレクトリ) -->
+            <%= link_to 'Back', "/", class: "back" %>
+        </div>
+    <% end %>
+</main>
