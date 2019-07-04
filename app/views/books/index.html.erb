@@ -31,15 +31,16 @@
                             <td><%= book.body %></td>
                             <!-- いいね機能の実施 -->
                             <td>
-                                <% if @book.favorited_by?(current_user) %>
+                                <!-- 引数で渡されたユーザーのIDがfavoritesテーブルに存在していればtrue -->
+                                <% if book.favorited_by?(current_user)%>
                                     <%= link_to book_favorites_path(book), method: :delete do %>
                                         <i class="glyphicon glyphicon-heart" aria-hidden="true" style="color: red;"></i>
-                                        <%= @book.favorites.count %><br> いいね
+                                        <%= book.favorites.count %><br> いいね
                                     <% end %>
                                 <% else %>
                                     <%= link_to book_favorites_path(book), method: :post do %>
                                         <i class="glyphicon glyphicon-heart-o" aria-hidden="true"></i>
-                                        <%= @book.favorites.count %><br> いいね
+                                        <%= book.favorites.count %><br> いいね
                                     <% end %>
                                 <% end %>
                             </td>
